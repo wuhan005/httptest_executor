@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/thanhpk/randstr"
 	"github.com/wuhan005/httptest/exec"
 	"io/ioutil"
 	"strings"
@@ -23,7 +24,8 @@ func allTests(t *testing.T) {
 				t.Fatal("ReadFile failed:", err)
 				return
 			}
-
+			randomStr := randstr.String(16)
+			b = []byte(strings.Replace(string(b), "[RANDOM_STR]", "\""+randomStr+"\"", -1))
 			err = exec.ExecCases(t, string(b))
 			if err != nil {
 				t.Fatal("ExecCases failed:", err)
